@@ -1,3 +1,1 @@
-# KadcarsMV2Contracts
-# IsokoMarmaladeV2Contracts
-# IsokoMarmaladeV2Contracts
+These are the set of contracts for kadcars marmalade-V2, all of which are deployed to kadena mainnet chain 8 
