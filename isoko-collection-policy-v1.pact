@@ -226,15 +226,15 @@
           (enforce (= (at "supply" token) 0.0) "Token already owned")
           (update-token-fields-for-mint token-id account)
           (increment-total-minted-for-collection collection-id collection)
-          ;  (if
-          ;    (= account ADMIN-ACCOUNT) 
-          ;    (with-capability (ADMIN) true)
-          ;    (if
-          ;      (> PRICE 0.0)
-          ;      (pay-mint account PRICE)
-          ;      (enforce-guard (get-user-guard account guard))
-          ;    )
-          ;  )
+          (if
+            (= account ADMIN-ACCOUNT) 
+            (with-capability (ADMIN) true)
+            (if
+              (> PRICE 0.0)
+              (pay-mint account PRICE)
+              (enforce-guard (get-user-guard account guard))
+            )
+          )
           true
         )
         )
