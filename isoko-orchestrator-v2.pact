@@ -422,7 +422,7 @@
   (defun clean-non-minted-lists:bool
     ( non-minted-list:[string] collection-id minted-total)
     (with-capability (GOVERNANCE)
-        (update collections collection-id
+        (update collections collection-id:string minted-total:integer
           {
             "non-minted-tokens": non-minted-list,
             "minted-total": minted-total
