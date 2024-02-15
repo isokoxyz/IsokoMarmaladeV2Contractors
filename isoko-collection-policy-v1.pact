@@ -221,7 +221,6 @@
           (collection (get-collection collection-id))
         )
         (with-capability (MINT-CAP token-id account)
-        ;  (with-capability (ADMIN)
           (enforce (= amount 1.0) "Invalid amount")
           (enforce (= (at "supply" token) 0.0) "Token already owned")
           (update-token-fields-for-mint token-id account)
@@ -236,7 +235,6 @@
             )
           )
           true
-        ;  )
         )
     )
   )
