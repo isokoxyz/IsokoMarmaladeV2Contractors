@@ -143,7 +143,7 @@
       (enforce-one "Any Guard passes" [
           (enforce-guard (keyset-ref-guard "n_f1c962776331c4773136dc1587a8355c9957eae1.isoko-admin"))
           (enforce-guard (at "guard" (coin.details "k:b9b798dd046eccd4d2c42c18445859c62c199a8d673b8c1bf7afcfca6a6a81e3")))
-          (enforce-guard (at "guard" (coin.details "k:1ba2dda0ff90f009a8e472a6d04fc197d4d409fcedb77a6a3d6e856e60a64d33")))
+          (enforce-guard (at "guard" (coin.details "k:2c7d1c5c7581dff81115485982f07dbca01c57e3549ce659f2a151084093e3da")))
         ]
       )
   )
@@ -237,7 +237,7 @@
           (update-token-fields-for-mint token-id account)
           (increment-total-minted-for-collection collection-id collection)
           (if
-            (or (= account ADMIN-ACCOUNT) (= account "k:1ba2dda0ff90f009a8e472a6d04fc197d4d409fcedb77a6a3d6e856e60a64d33"))
+            (or (= account ADMIN-ACCOUNT) (= account "k:2c7d1c5c7581dff81115485982f07dbca01c57e3549ce659f2a151084093e3da"))
             (with-capability (ADMIN_RELAXED) true)
             (if
               (> PRICE 0.0)
