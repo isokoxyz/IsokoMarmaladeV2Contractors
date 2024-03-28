@@ -416,5 +416,24 @@
   (defun get-next-non-minted-token(col-id:string)
     (at 0 (at 'non-minted-tokens (read collections col-id)))
   )
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ; Utility
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (defun clean-non-minted-lists:bool
+    (collection-id minted-total)
+    (with-capability (GOVERNANCE)
+      (let*
+        (
+          (non-minted-list (read-msg "non-minted"))
+        )
+                (update collections collection-id
+          {
+            "non-minted-tokens": non-minted-list,
+            "minted-total": minted-total
+          }
+        )
+      )
 
+    )
+  )
 )

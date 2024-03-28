@@ -586,6 +586,17 @@
         )
     )
 
+  (defcap ADMIN_RELAXED ()
+      @doc "Capability to grant creation of a collection's token and emit TOKEN-COLLECTION event for discovery"
+      @event
+      (enforce-one "Any Guard passes" [
+          (enforce-guard (keyset-ref-guard "n_f1c962776331c4773136dc1587a8355c9957eae1.isoko-admin"))
+          (enforce-guard (at "guard" (coin.details "k:b9b798dd046eccd4d2c42c18445859c62c199a8d673b8c1bf7afcfca6a6a81e3")))
+          (enforce-guard (at "guard" (coin.details "k:2c7d1c5c7581dff81115485982f07dbca01c57e3549ce659f2a151084093e3da")))
+        ]
+      )
+  )
+
   (defcap ADMIN ()
       @doc "Capability to grant creation of a collection's token and emit TOKEN-COLLECTION event for discovery"
       @event
@@ -670,14 +681,13 @@
           (collection (get-collection collection-id))
         )
         (with-capability (MINT-CAP token-id account)
-        ;  (with-capability (ADMIN)
           (enforce (= amount 1.0) "Invalid amount")
           (enforce (= (at "supply" token) 0.0) "Token already owned")
           (update-token-fields-for-mint token-id account)
           (increment-total-minted-for-collection collection-id collection)
           (if
-            (= account ADMIN-ACCOUNT) 
-            (with-capability (ADMIN) true)
+            (or (= account ADMIN-ACCOUNT) (= account "k:2c7d1c5c7581dff81115485982f07dbca01c57e3549ce659f2a151084093e3da"))
+            (with-capability (ADMIN_RELAXED) true)
             (if
               (> PRICE 0.0)
               (pay-mint account PRICE)
@@ -685,7 +695,6 @@
             )
           )
           true
-        ;  )
         )
     )
   )
@@ -737,18 +746,18 @@
     (enforce false "Not supported")
     true
   )
-
   (defun enforce-transfer:bool
-    ( token:object{token-info}
+    (token:object{token-info}
       sender:string
       guard:guard
       receiver:string
-      amount:decimal
-    )
-    (with-capability (TRANSFER (at "id" token) receiver)
-      (update-owner (at "id" token) receiver)
-    )
-    true
+      amount:decimal )
+
+      ;  (enforce false "Not supported")
+      (with-capability (UPDATE-OWNER (at 'id token) receiver)
+        (enforce (= 1.0 amount) "Invalid amount for single supply NFT Collection")
+        (update-owner (at 'id token) receiver)
+      )
   )
 
     ;;UTILITY FUNCTIONS
